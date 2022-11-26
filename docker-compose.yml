@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  database_dumper:
+    container_name: database_dumper
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    environment:
+      - "SOURCE=${SOURCE}"
+      - "TARGET=${TARGET}"
+      - "ENTITY=${ENTITY}"
+    volumes:
+      - ./:/dumper
+    network_mode: bridge

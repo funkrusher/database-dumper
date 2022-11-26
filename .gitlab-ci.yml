@@ -1,0 +1,24 @@
+# this .gitlab-ci.yml file is an example on how to trigger the database-dumper with help of Gitlab-Pipelines.
+# If the user merges the project into the "testing"-branch the pipeline will fire automatically,
+# and will copy the production/testing configurations from the gitlab ci-variables into the project.
+# (they need to stay in the gitlab ci-variables for safety reasons, because the passwords should not be checked into git)
+# - then the dump+import is called exactly once for the given flow (achamoth_production_testing)
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - when: always
+
+testing dump and import:
+  script:
+    - cd $CI_PROJECT_DIR
+    - cp $PRODUCTION_ACHAMOTH_ENV ./config/environments/local/achamoth.env
+    - cp $TESTING_ACHAMOTH_ENV ./config/environments/testing/achamoth.env
+    - docker-compose up --env-file ./pipelines/achamoth_production_testing.env --build
+  rules:
+    - if: $CI_COMMIT_REF_SLUG == "testing"
+  environment:
+    name: testing
+  tags:
+    - serverx

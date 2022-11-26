@@ -1,0 +1,13 @@
+config:
+  addons:
+    - some.other.package
+    - yet.another.package
+  extra_parameters: # These parameters will be passed to the dump tool CLI
+    mysqldump:
+      - "--max_allowed_packet=1G --single-transaction --quick --lock-tables=false --ignore-table=xyz.MyStrangeTable"
+    pg_dump:
+      - "--exclude-table=something"
+strategy:
+  question:
+    contentId: achamoth.email
+  access_log: skip_rows

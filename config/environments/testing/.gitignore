@@ -1,0 +1,8 @@
+# Ignore everything in this directory
+*.env
+# Except our base-files
+!.gitignore
+
+# Un-ignore the affected subdirectory
+!/_templates/
+!/_templates/*.env
