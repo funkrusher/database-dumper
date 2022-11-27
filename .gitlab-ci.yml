@@ -13,7 +13,7 @@ workflow:
 testing dump and import:
   script:
     - cd $CI_PROJECT_DIR
-    - cp $PRODUCTION_ACHAMOTH_ENV ./config/environments/local/achamoth.env
+    - cp $PRODUCTION_ACHAMOTH_ENV ./config/environments/production/achamoth.env
     - cp $TESTING_ACHAMOTH_ENV ./config/environments/testing/achamoth.env
     - docker-compose up --env-file ./pipelines/achamoth_production_testing.env --build
   rules:
